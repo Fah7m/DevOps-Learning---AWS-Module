@@ -5,6 +5,12 @@ IAM
 
 **IAM Access Advisor** shows the service persmissions granted toa  user and when those services were last accessed - good for revising policies
 
+**IAM roles** = Identities in AWS that define set of permissions through policies - Flow is like the below:
+
+Create IAM role
+Attach policy e.g. AmazonS3ReadOnlyAccess 
+Assing the polcy for a role like Lambda function
+When the function runs it automatically has those premissions - no hardcoding credentials so it can gain access to that service.
 
 EC2
 ---
