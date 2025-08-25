@@ -12,11 +12,4 @@ AZ = One or more data centers inside a region which is designed for redundancy a
 Edge Location = Not inside an AZ - they are separate smaller data centers all over the world used for low latency services like CloudFront (CDN) Route 53 (DNS) Shield and WAF
 
 
-**IAM roles** = Identities in AWS that define set of permissions through policies - Flow is like the below:
-
-Create IAM role
-Attach policy e.g. AmazonS3ReadOnlyAccess 
-Assing the polcy for a role like Lambda function
-When the function runs it automatically has those premissions - no hardcoding credentials so it can gain access to that service.
-
-
+<img width="1474" height="578" alt="image" src="https://github.com/user-attachments/assets/32d5e060-b16e-4113-a9d2-033b0a0aa833" />
