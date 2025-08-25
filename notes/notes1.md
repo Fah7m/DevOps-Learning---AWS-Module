@@ -58,3 +58,20 @@ SG's are locked down to a certain region or VPC combination - this means you can
 
 <img width="1805" height="920" alt="image" src="https://github.com/user-attachments/assets/ecb998cb-95cb-4f18-81ab-0e951b48808e" />
 
+
+Internet Gateway 
+---
+The internet gateway plays a similar role to the router that is at every home, meaning they both perform Network Adress translation (NAT). They convert private IPs to Public IPs so that devices in a private network can communicate with the public internet by providing a public IP. 
+
+
+Elastic IP
+---
+
+Normally when EC2 instances are stopped and started, they can have a different IP address. An Elastic IP is basically a fixed IP that you own unless you delete it. - can only be attached to one instance at a time.
+
+These IP's are charged when they are not used so if they are used by an EC2 instance you will not be charged. - 5 elastic IPs are allowed on your AWS account but can be increased if asked.
+
+These IPs are often used in some failover scenarios but that would be a poor architectural decision - Using DNS or a load balancer is a better choice for this.
+
+When setting up the EC2 instance, make sure to disable "Auto Assign IP" so that you can associate an Elastic IP to that EC2 instance. 
+<img width="459" height="246" alt="image" src="https://github.com/user-attachments/assets/de17c380-a03d-478f-b9bd-55c526e99352" />
