@@ -1,4 +1,4 @@
-IAM
+7IAM
 ---
 
 **IAM Credentials Report** is a report that lists all your accoutns users and staus of their various credentials.
@@ -84,3 +84,13 @@ Elastic Block Store volumes are basically a way of attaching a hard disk to your
 If a EBS volume is attached to an EC2 instance and that ec2 is then terminated or stopped, the data will still live within the volume unless it is set to "Delete on termination = true"
 
 EBS can only live within one AZ meaning if its created in eu west 1a  it can't be used in eu west 1b for another instance
+
+
+EFS
+---
+Elastic File System is a fully managed service that can be used region wide by multiple AZs e.g. euwest1a, 1b, 1c. Multiple EC2 instances or even thousands can mount the same EFS. 
+
+Compared to EBS, EFS is more expensive but is auto scalable unlike EBS so you pay for what you use however it is more expensive per GB.
+
+EFS is like a shared Linux NFS filesystem that you mount across multiple instances and AZs, with AWS handling all the scaling and durability behind the scenes 
+ 
