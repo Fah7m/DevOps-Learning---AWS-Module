@@ -75,3 +75,12 @@ These IPs are often used in some failover scenarios but that would be a poor arc
 
 When setting up the EC2 instance, make sure to disable "Auto Assign IP" so that you can associate an Elastic IP to that EC2 instance. 
 <img width="459" height="246" alt="image" src="https://github.com/user-attachments/assets/de17c380-a03d-478f-b9bd-55c526e99352" />
+
+
+EBS Volume
+---
+Elastic Block Store volumes are basically a way of attaching a hard disk to your ec2 instance to ensure it persits data. 
+
+If a EBS volume is attached to an EC2 instance and that ec2 is then terminated or stopped, the data will still live within the volume unless it is set to "Delete on termination = true"
+
+EBS can only live within one AZ meaning if its created in eu west 1a  it can't be used in eu west 1b for another instance
