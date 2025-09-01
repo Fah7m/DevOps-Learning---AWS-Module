@@ -31,3 +31,35 @@ Task B might need to write and read data to Dynamo DB. By using separate roles f
 
 By giving these roles to the contains, we allow for them to securely interact with AWS services without having to give them too much power as we wont want each container to have unrestricted access to all AWS Services.
 
+**EKS Node types**
+
+Self managed Node - Nodes are created by you and registered to the EKS cluster and managed by Auto Scaling Group. AWS Creates and manages your worker nodes which are the EC2 instances. It also supports On-Demand or Spot Instances and you can use a prebuilt AMI - AMazon EKS optimized AMI
+
+Managed Node Groups - You take control of this yourself meaning you create the Nodes yourseld and they get registered with your EKS cluster. You can customize your own AMI or use a pre-built EKS optimized AMI. There is support for on-demand or spot instance just like managed nodes
+
+AWS Fargate - This is serverless so you don't manage any infra as AWS takes care of everything under the hood. So you don't deal with EC2 instances at all and there's no nodes to manage. You define the CPU and memory requirements for the container and Fargate does the rest - Costs more 
+
+
+Serverless
+---
+
+Serverless in AWS is the term that is used when you don't have to worry about managing any servers at all and you just write the code. These code deployments are **Function based** meaning you use Lambda functions which get triggered by events. 
+
+Serverless includes:
+
+<img width="926" height="447" alt="image" src="https://github.com/user-attachments/assets/0bbe0405-775b-40b9-acac-f213d64a62e1" />
+
+**AWS Lambda** has a short execution which means its meant for quick tasks and it has a runtime limit of 15 minutes. This makes it perfect for event-driven code where things happen based on triggers. Unlike EC2 instances, Lambda runs on demand meaning that it only runs when you need it so you don't pay for any idle time as you would for EC2 instance but instead the actual compute power used and automated scaling. 
+
+Lambda supports these programming languages:
+
+Node.js (JavaScript)
+Python
+Java
+C#
+Ruby 
+Custom Runtime API - allows to run other languages like Rust or Golang
+Lambda Container Image - ECS/Fargate is preferred for running arbitrary Docker Images.
+
+Lambda can be run like CRON job by setting a CloudWatch Event to trigger every hour and from there a Lambda Function can be set to run a certain job such as running a backup or use other AWS Services to run a certain task. 
+
