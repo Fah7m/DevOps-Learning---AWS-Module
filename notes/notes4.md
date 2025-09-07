@@ -102,3 +102,23 @@ VPC endpoints allow you to connect to AWS services like S3, SNS etc using a priv
 This is done so that your not exposing your VPC to the internet just to access AWS services and the setup is redunant and sacles horizontally, meaning it's super reliable and can handle increasin load without needing intervention. No need for NAT or IGW to access AWS services even in the private instances as the VPC endpoint does the job.
 
 Issues that you may face with this is that somtimes you can run into hiccups and these can be addressed by checking the DNS resolution settings in the VPC. As well as checking the route tables to make sure traffic is being routes correctly to the VPC endpoint . 
+
+
+**Endpoint types**
+
+***Interface Endpoint***
+Endpoints provision what is done behind the scenes and they create A Elastic Network Interface which is a private IP addressed that serves as the entry point for EC2 instances to connect to the AWS services. It is basically a way keeping everything on a private network instead of going out over the internet. 
+
+A security group will have to be attached since it's using a Elastic Network Interface in order to manage traffic going from and to the private instaces. 
+
+<img width="728" height="520" alt="image" src="https://github.com/user-attachments/assets/af00736e-2dbf-437f-a0fb-0b4b6076ca3f" />
+
+
+***Gateway Endpoint***
+Gateway Endpoints dont need to provision an ENI but instead it creates a gateway in your route table that sends traffic for certain AWS service directly to them - only S3 and DynamoDB is supported.
+
+There are no SGs required for this type of endpoint which simplifies the setup and it is also free unline Interface Endpoint
+
+<img width="720" height="520" alt="image" src="https://github.com/user-attachments/assets/88c6246e-c5e9-4470-8f7a-70a931cbd661" />
+
+
