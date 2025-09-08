@@ -122,3 +122,71 @@ There are no SGs required for this type of endpoint which simplifies the setup a
 <img width="720" height="520" alt="image" src="https://github.com/user-attachments/assets/88c6246e-c5e9-4470-8f7a-70a931cbd661" />
 
 
+
+IPv6 in VPC
+---
+Since IPv4 cannot be disabled, something called dual stack mode can be run where IPv6 and IPv4 operates alongside each other. This means the resources use IPv4 and IPv6 at the same time. 
+
+EC2 instances will have both IPv4 internal communications within the VPC and a public IPv6 which interrouteable. Meaning the instances can communicate with the internet using either IPv4 or IPv6 and this is made possible through the internet Gateway which supports both IP protocols.
+
+***Troubleshooting IPv6***
+
+Unable to launch an EC2 instance in your subnet - this is because there is no available IPv4 in your subnet so a new IPv4 CIDR will need to be created in the subnet.
+
+Egress only INternet Gateways are specifically designed for IPv6 traffic - basically NAT gateways for ipv6 addressed. 
+
+THey let the instances communicate out to the internet over IPv6 while blocking any incoming connections from the outside world. Instances in your VPC can use this Egress gateway to send traffic out to the internet over IPv6 but the internet is blocked from initiating connections back to your instances.
+
+Its important to update route tables so that you can direct the outbound traffic from a private subnet through the Egress Only Gateway, if not then the instances won't be able to communicate with the outside world.
+
+
+**Routing in IPv6**
+
+IPV6 routing works within a VPC that operates in a dual stack mode, meaning that both IPv4 and IPv6 addresses are enabled. 
+
+<img width="1264" height="872" alt="image" src="https://github.com/user-attachments/assets/ff1d1a4b-7f20-48c9-bee1-91b04cdcd3e7" />
+
+In this diagram we see a VPC which is dual stacked and has two subnets, private and public. 
+
+For the public subnet we cna see it has IPv4 and IPv6 enabled and the EC2 instance in the public subnet is using both a private IPv4 address and a Public Elastic IP. Also, it has  apublic IPv6 address which means the instance can communicate wit the internet using both IPv4 and IPv6. 
+
+For the private subnet, we can see it does not have direct internet access. THe instances here have a private IPv4 and they route traffic through a NAT gateway locared in the public subnet. The NAT gateway is used for IPv4 outbound internet access and the INternet gateway is used for IPv6 outbound access.
+
+For IPv6 traffic, instances can route their requests directly through the internet gateway for both public and private unlike IPv4 where a NAT gateway is required for private instances to access the internet. 
+
+Then we have the route tables. The public subnet route table directs traffic for the VPC's internal IPv4 and IPv6 CIDR blocks locally, while all other IPv4 and v6 traffic to the internet is sent to the internet gateway.
+
+In the private subnet, the route table sends IPv4 traffic to the NAT gateway and the IPv6 traffic goes to the internet gateway which allows the private instances to communicate with the internet for both protocols.
+
+
+VPC Summary
+---
+CIDR - THis is essentially the IP range you define for your VPC for both IPv4 and v6. it sets the boundaries for your IP address allocation
+
+VPC - Virtual Private Cloud is where you isolate a virtual network in AWS and where the ip ranges are defined for the resources to use. 
+
+Subnets - Breaking down of a VPC into smaller chunks and each subnet is tied to an AZ - different CIDRs can be assigned to each subnet
+
+IGW - This is how the VPC gets internet access for both IPv4 and IPv6 and it's created at the VPC level. - provides routing to and from the internet.
+
+Route Tables - THese need to be configured to ensure traffic flows properly. They can be used to add routes from your subnets to internet gateways, VPC peering and VPC endpoints. 
+
+Bastion Host - This is a secure bridge which is a private EC2 instance that allows you to access EC2 instances in a private instance. 
+
+NAT Instance- Older way of giving internet access to Ec2 instances in a private subnet however there is a lot of configuration that comes into play with these.
+
+NAT Gateway - AWS managed version of NAT instance. It's scalable and it provides internet access to priv EC2 instances like disabling the source destination.
+
+NACL - Network Access Control List operate at the subnet level and are stateless which means each request is evaluated independently. They control outbound and inbound traffic flows.
+
+SG - Security Groups are stateful firewalls that operate at the EC2 instance level which means once you allow traffic in or out, the response traffic is automatically allowed without needing another rule.
+
+VPC peering - A way to connect two VPC using AWS's internal networking however it's non transitive which means VPC A and B are peered and B and C are peered however A and C can't communicate without a separate peering connection. (Transit gateways for that)
+
+VPC Endpoints - THese allow for private access to AWS services such as S3 DynamoDB without using public internet. 
+
+VPC endpoint services (PrivateLink) - This is a service for connnecting one VPC to another like from a Service provider VPC to customer VPC. These do not need VPC peering or NAT gateway or even public network connection and it only needs to be used with Network Load Balancers or ENI.
+
+Egress Only IGW - Like a NAT gateway but for IPv6 targets only
+
+Transite Gateway - Unlike VPC peering, transite GW providate transitive connectivity across VPC, VPNs and direct connection. It's like a hub that allows multiple networks to talk to each other without needing direct peering relationships. 
