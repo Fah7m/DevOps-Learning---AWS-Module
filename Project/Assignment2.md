@@ -30,8 +30,8 @@ I then went on to create a Target Group for both the EC2 instances so that the A
 Also, within the Target Group, I added health checks so that the TG can decide whether an instance is healthy and receives traffic.
 
 <img width="1594" height="285" alt="image" src="https://github.com/user-attachments/assets/390cbfdb-263f-462d-a05f-0adf72a4ba4f" />
-**The EC2 instances registered to the target group with health status shown**
 
+**The EC2 instances registered to the target group with health status shown**
 
 Finally, I created the Application Load Balancer which points to the target group to direct traffic to the instances. 
 
@@ -49,3 +49,14 @@ Result of ALB
 By using dig against the DNS for the load balancer we created, I can see that there are two IP addresses under the Answer Section for dig meaning we have the two Public EC2 instance IP's showing and these are the instances being used to load balance against in the ALB
 
 <img width="795" height="410" alt="image" src="https://github.com/user-attachments/assets/49103f20-97a2-419d-afe9-37d6d3e73207" />
+
+Also, when you refresh each time on the web browser using the DNS for the load balancer, we can see the IP changes each time showing it has directed traffic to a different EC2 instance. 
+
+First EC2 instance:
+
+<img width="802" height="196" alt="image" src="https://github.com/user-attachments/assets/324e950d-04fc-4bba-bbb6-3cb78ebc8545" />
+
+Second EC2 instance:
+
+<img width="706" height="210" alt="image" src="https://github.com/user-attachments/assets/7cd1ff7f-89bc-4f09-82d6-7fce049784dc" />
+
